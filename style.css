@@ -1,0 +1,858 @@
+/* --- 1. Variables Globales para Consistencia y Robustez --- */
+:root {
+    --primary-color: #007bff; /* Azul vibrante */
+    --secondary-color: #28a745; /* Verde de éxito */
+    --accent-color: #f0ad4e; /* Naranja de acento sutil */
+    --dark-blue: #004085; /* Azul oscuro para texto principal */
+    --light-gray-bg: #f9fbfd; /* Fondo claro y suave */
+    --medium-gray-text: #6c757d; /* Texto secundario gris */
+    --dark-text: #343a40; /* Texto oscuro principal */
+    --white: #ffffff;
+    --black: #000000;
+
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.18);
+    --shadow-xl: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+    --border-radius-sm: 8px;
+    --border-radius-md: 15px;
+    --transition-speed: 0.3s ease-out;
+}
+
+/* --- 2. Reset Básico y Estilos Globales --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--dark-text);
+    background-color: var(--light-gray-bg);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Clase para prevenir scroll del body cuando un modal está abierto */
+body.modal-open {
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--dark-blue);
+}
+
+/* --- 3. Tipografía General y Jerarquía --- */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--dark-blue);
+    margin-bottom: 0.8em;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 { font-size: 3.5em; }
+h2 { font-size: 2.8em; }
+h3 { font-size: 2em; }
+h4 { font-size: 1.5em; }
+p { font-size: 1.1em; margin-bottom: 1.2em; }
+
+.section-title {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    position: relative;
+    padding-bottom: 15px;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--secondary-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.section-description {
+    font-size: 1.25em;
+    color: var(--medium-gray-text);
+    max-width: 850px;
+    margin: 0 auto 3em auto;
+    font-weight: 300;
+}
+
+.section-title-white {
+    color: var(--white);
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    position: relative;
+    padding-bottom: 15px;
+}
+.section-title-white::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.section-description-white {
+    font-size: 1.25em;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 850px;
+    margin: 0 auto 3em auto;
+    font-weight: 300;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+/* --- 4. Header y Navegación --- */
+.main-header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+    padding: 15px 0; /* Padding reducido ligeramente */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Header siempre arriba */
+    border-bottom: 4px solid var(--primary-color);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Necesario para el posicionamiento del menú móvil */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--dark-blue);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.8em; /* Ajustado */
+    letter-spacing: -0.5px;
+    z-index: 1001; /* Asegurar que el logo esté sobre el menú desplegable */
+}
+
+.cun-logo {
+    height: 45px;
+    margin-right: 12px;
+    object-fit: contain;
+    transition: transform var(--transition-speed);
+}
+.logo:hover .cun-logo {
+    transform: scale(1.05) rotate(2deg);
+}
+
+.brand-name {
+    color: var(--primary-color);
+    transition: color var(--transition-speed);
+}
+.logo:hover .brand-name {
+    color: var(--secondary-color);
+}
+
+
+.main-nav .nav-list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav .nav-list li {
+    margin-left: 30px;
+}
+
+.main-nav .nav-list li a {
+    text-decoration: none;
+    color: var(--dark-blue);
+    font-weight: 600;
+    font-size: 1.05em;
+    padding: 8px 0;
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+.main-nav .nav-list li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 3px;
+    background-color: var(--secondary-color);
+    transition: width var(--transition-speed) ease-in-out;
+}
+
+.main-nav .nav-list li a:hover::after,
+.main-nav .nav-list li a.active::after {
+    width: 100%;
+}
+
+.main-nav .nav-list li a:hover,
+.main-nav .nav-list li a.active {
+    color: var(--primary-color);
+}
+
+.nav-toggle {
+    display: none; /* Oculto por defecto en desktop */
+    background: none;
+    border: none;
+    font-size: 2em; /* Icono más grande */
+    color: var(--dark-blue);
+    cursor: pointer;
+    padding: 5px;
+    transition: color var(--transition-speed);
+    z-index: 1001; /* Asegurar que el botón esté sobre el menú desplegable */
+}
+.nav-toggle:hover {
+    color: var(--primary-color);
+}
+
+
+/* --- 5. Secciones Generales --- */
+.content-section {
+    padding: 100px 0;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.gray-bg {
+    background-color: var(--light-gray-bg);
+    background-image: linear-gradient(45deg, rgba(255,255,255,.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05)),
+                      linear-gradient(45deg, rgba(255,255,255,.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05));
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+}
+
+/* --- 6. Hero Section --- */
+.hero-section {
+    background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+    color: var(--white);
+    padding: 160px 0 140px 0; /* Ajuste de padding superior */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-image: radial-gradient(circle at top left, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 50%),
+                      radial-gradient(circle at bottom right, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 50%);
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.2) 0%, rgba(40, 167, 69, 0.2) 100%);
+    z-index: -1;
+}
+
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    color: var(--white);
+    font-size: 4.8em;
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    font-weight: 800;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.98);
+    font-size: 1.6em;
+    max-width: 850px;
+    margin: 0 auto 60px auto;
+    font-weight: 300;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+/* --- 7. Botones --- */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.15em;
+    letter-spacing: 0.5px;
+    transition: all var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: var(--shadow-md);
+    border: none;
+    cursor: pointer;
+}
+
+.primary-button {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.primary-button:hover {
+    background-color: #218838;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+}
+
+.secondary-button {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.secondary-button:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+}
+
+.white-button {
+    background-color: var(--white);
+    color: var(--dark-blue);
+    border: none;
+}
+
+.white-button:hover {
+    background-color: var(--accent-color);
+    color: var(--white);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(240, 173, 78, 0.4);
+}
+
+/* --- 8. Iconos --- */
+.icon-large {
+    font-size: 4.8em;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    line-height: 1;
+}
+
+.icon-medium {
+    font-size: 3.8em;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    line-height: 1;
+}
+.blue-icon {
+    color: var(--primary-color);
+}
+.green-icon {
+    color: var(--secondary-color);
+}
+
+.kpi-icon {
+    font-size: 2.5em;
+    color: var(--primary-color);
+    margin-right: 15px;
+}
+
+/* --- 9. Grid Layouts --- */
+.problem-grid, .solution-grid, .model-grid, .segment-grid, .kpi-grid, .differentiator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 35px;
+    margin-top: 50px;
+}
+
+/* --- 10. Card Components --- */
+.card {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.problem-item h3, .solution-item h3, .model-item h3, .segment-item h4, .differentiator-item h3 {
+    color: var(--dark-blue);
+    margin-top: 15px;
+    margin-bottom: 12px;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.problem-item p, .solution-item p, .model-item p, .segment-item p, .differentiator-item p {
+    font-size: 1.05em;
+    color: var(--medium-gray-text);
+}
+
+
+.segment-category {
+    margin-top: 70px;
+    margin-bottom: 60px;
+}
+.category-title {
+    color: var(--dark-blue);
+    margin-bottom: 45px;
+    font-size: 2.8em;
+    position: relative;
+    padding-bottom: 10px;
+}
+.category-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 10px auto 0;
+    border-radius: 1.5px;
+}
+
+.highlight-text {
+    font-size: 1.35em;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin-top: 60px;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 25px;
+    background-color: var(--white);
+    border-left: 6px solid var(--secondary-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    text-align: left;
+}
+.highlight-text-light {
+    color: var(--primary-color);
+    border-left: 6px solid var(--accent-color);
+}
+
+
+/* KPI Cards */
+.kpi-card {
+    align-items: flex-start;
+    text-align: left;
+    padding: 35px;
+}
+.kpi-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.kpi-card h3 {
+    font-size: 1.7em;
+    margin: 0;
+    color: var(--dark-blue);
+}
+.kpi-value {
+    font-size: 3em;
+    font-weight: 800;
+    color: var(--secondary-color);
+    margin-top: 10px;
+    margin-bottom: 18px;
+    letter-spacing: -1px;
+}
+.kpi-card p {
+    font-size: 1em;
+    color: var(--medium-gray-text);
+}
+
+
+/* --- 11. Call to Action Final --- */
+.call-to-action-final {
+    background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+    color: var(--white);
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid var(--secondary-color);
+    background-image: radial-gradient(circle at top left, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 50%),
+                      radial-gradient(circle at bottom right, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 50%);
+}
+.call-to-action-final::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.2) 0%, rgba(40, 167, 69, 0.2) 100%);
+    z-index: -1;
+}
+
+.qr-section {
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-code {
+    max-width: 220px;
+    height: auto;
+    border: 10px solid var(--white);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-lg);
+}
+
+.qr-text-white {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.98);
+    font-weight: 600;
+    max-width: 600px;
+}
+
+.website-link-white {
+    font-size: 1.1em;
+    margin-top: 30px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.website-link-white a {
+    color: var(--white);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.website-link-white a:hover {
+    color: var(--accent-color);
+}
+
+/* --- 12. Footer --- */
+.main-footer {
+    background-color: var(--dark-text);
+    color: var(--white);
+    padding: 50px 0;
+    font-size: 0.98em;
+    text-align: center;
+    border-top: 4px solid var(--secondary-color);
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* --- 13. Animaciones al Hacer Scroll (reveal-on-scroll) --- */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.reveal-on-scroll.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- 14. Estilos de Modales --- */
+.modal-header-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.modal-cun-logo {
+    height: 40px;
+    margin-right: 15px;
+    object-fit: contain;
+}
+
+.modal-title {
+    color: var(--primary-color);
+    font-size: 1.8em; /* Un poco más pequeño en móvil */
+    margin: 0;
+    line-height: 1.2;
+}
+
+.student-names {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 15px;
+    line-height: 1.6;
+    font-weight: 600;
+    color: var(--dark-blue);
+    text-align: center;
+    font-size: 0.95em;
+    background-color: #f0f4f8; /* Fondo suave para destacar */
+    padding: 15px;
+    border-radius: var(--border-radius-sm);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 5vh auto; /* Margen superior/inferior */
+    padding: 30px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-xl);
+    max-width: 700px;
+    width: 90%; /* Ancho responsivo */
+    position: relative;
+    animation: slideIn 0.4s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+    text-align: left;
+    border-top: 8px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 40px; /* Más grande para tocar fácil */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+    z-index: 10; /* Asegurar que esté encima */
+    line-height: 1;
+}
+.close-button:hover,
+.close-button:focus {
+    color: var(--dark-blue);
+}
+
+.modal-text {
+    font-size: 1.05em;
+    color: var(--dark-text);
+    margin-bottom: 15px;
+}
+
+.modal-content ul:not(.student-names) { /* Estilos para listas normales del modal */
+    list-style: disc;
+    margin-left: 25px;
+    margin-bottom: 20px;
+    color: var(--dark-text);
+
+}
+.modal-content ul:not(.student-names) li {
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.modal-note {
+    font-size: 0.95em;
+    color: var(--medium-gray-text);
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+/* Chat Simulation */
+.chat-simulation {
+    background-color: #f4f7f6;
+    border-radius: var(--border-radius-sm);
+    padding: 20px;
+    margin-top: 20px;
+    max-height: 300px; /* Más altura */
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+.chat-message {
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    border-radius: 20px;
+    max-width: 85%;
+    font-size: 1em;
+    line-height: 1.4;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.bot-message {
+    background-color: var(--white);
+    color: var(--dark-text);
+    align-self: flex-start;
+    text-align: left;
+    margin-right: auto;
+    border-bottom-left-radius: 2px;
+}
+.user-message {
+    background-color: var(--primary-color);
+    color: var(--white);
+    align-self: flex-end;
+    text-align: right;
+    margin-left: auto;
+    border-bottom-right-radius: 2px;
+}
+
+.modal-button-bottom {
+    margin-top: 30px;
+    align-self: center;
+    width: 100%; /* Botón ancho en móvil */
+    max-width: 300px;
+}
+
+/* Animaciones Modal */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+
+/* =========================================
+   15. RESPONSIVE DESIGN (CORRECCIÓN HAMBURGUESA)
+   ========================================= */
+@media (max-width: 992px) {
+    /* Ajustes generales de texto */
+    h1 { font-size: 3em; }
+    h2 { font-size: 2.4em; }
+    .hero-title { font-size: 3.5em; }
+    .hero-subtitle { font-size: 1.3em; }
+    .section-title { font-size: 2.5em; }
+
+    /* --- NAVEGACIÓN MÓVIL CORREGIDA --- */
+    .nav-toggle {
+        display: block; /* Mostrar botón hamburguesa */
+    }
+
+    .main-nav .nav-list {
+        /* Configuración base del menú móvil (oculto) */
+        display: flex; /* Mantener flex, ocultar con visibilidad/opacidad */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Justo debajo del header */
+        left: 0;
+        width: 100%;
+        background-color: var(--white);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra hacia abajo */
+        padding: 20px 0;
+        z-index: 999; /* Debajo del header (1000), encima del contenido */
+        
+        /* Estado Oculto (por defecto) */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-10px); /* Ligero desplazamiento hacia arriba */
+        transition: all 0.3s ease-in-out; /* Transición suave */
+    }
+
+    .main-nav .nav-list.active {
+        /* Estado Visible (cuando se hace clic) */
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0); /* Posición normal */
+    }
+
+    /* Estilos de los items del menú móvil */
+    .main-nav .nav-list li {
+        margin: 0; /* Resetear margen lateral */
+        width: 100%;
+        text-align: center;
+    }
+    .main-nav .nav-list li a {
+        padding: 15px 0; /* Áreas de clic más grandes */
+        display: block;
+        font-size: 1.2em;
+        border-bottom: 1px solid #f0f0f0; /* Separadores sutiles */
+    }
+    .main-nav .nav-list li:last-child a {
+        border-bottom: none;
+    }
+    .main-nav .nav-list li a::after {
+        display: none; /* Quitar subrayado de desktop */
+    }
+    .main-nav .nav-list li a:hover,
+    .main-nav .nav-list li a.active {
+        background-color: #f8f9fa; /* Fondo suave en hover/active */
+        color: var(--primary-color);
+    }
+    /* --- FIN CORRECCIÓN NAVEGACIÓN --- */
+
+
+    /* Ajustes de layout móvil */
+    .hero-section { padding: 120px 0 100px 0; }
+    .hero-buttons { flex-direction: column; gap: 15px; }
+    .button { width: 90%; max-width: 400px; }
+
+    .problem-grid, .solution-grid, .model-grid, .segment-grid, .kpi-grid, .differentiator-grid {
+        grid-template-columns: 1fr; /* Una columna */
+        gap: 30px;
+        padding: 0 10px; /* Margen lateral en grids */
+    }
+    .card { padding: 35px 25px; }
+    .kpi-card { text-align: center; align-items: center; }
+    .kpi-header { justify-content: center; margin-bottom: 15px; }
+    .kpi-icon { margin-right: 0; margin-bottom: 10px; }
+    .kpi-value { font-size: 2.8em; }
+
+    .call-to-action-final { padding: 80px 0; }
+    .call-to-action-final h2 { font-size: 2.5em; }
+    .qr-code { max-width: 180px; }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para pantallas muy pequeñas */
+    .logo { font-size: 1.5em; }
+    .cun-logo { height: 35px; margin-right: 8px; }
+    .nav-toggle { font-size: 1.8em; }
+
+    .hero-title { font-size: 2.8em; }
+    .hero-subtitle { font-size: 1.2em; }
+    .section-title { font-size: 2.2em; }
+
+    .card { padding: 30px 20px; }
+    .icon-large { font-size: 4em; }
+    .icon-medium { font-size: 3.5em; }
+    
+    .modal-content { padding: 20px; margin: 2vh auto; }
+    .modal-title { font-size: 1.5em; }
+    .close-button { top: 5px; right: 15px; font-size: 35px; }
+    .student-names { font-size: 0.9em; }
+}
